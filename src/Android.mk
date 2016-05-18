@@ -29,7 +29,6 @@ LOCAL_SRC_FILES := \
         dsp/cost_mips32.c \
         dsp/cost_mips_dsp_r2.c \
         dsp/cost_sse2.c \
-        dsp/cpu-features.c \
         dsp/cpu.c \
         dsp/enc.c \
         dsp/enc_avx2.c \
@@ -117,7 +116,6 @@ LOCAL_SRC_FILES := \
         dsp/alpha_processing_mips_dsp_r2.c \
         dsp/alpha_processing_sse2.c \
         dsp/alpha_processing_sse41.c \
-        dsp/cpu-features.c \
         dsp/cpu.c \
         dsp/dec.c \
         dsp/dec_clip_tables.c \
