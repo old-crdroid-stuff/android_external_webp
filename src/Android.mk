@@ -69,6 +69,10 @@ LOCAL_SRC_FILES := \
         enc/tree_enc.c \
         enc/vp8l_enc.c \
         enc/webp_enc.c \
+        mux/anim_encode.c \
+        mux/muxedit.c \
+        mux/muxinternal.c \
+        mux/muxread.c \
         utils/bit_reader_utils.c \
         utils/bit_writer_utils.c \
         utils/color_cache_utils.c \
