@@ -92,6 +92,7 @@ LOCAL_C_INCLUDES += \
         $(LOCAL_PATH)/../include
 
 LOCAL_MODULE := libwebp-encode
+LOCAL_CLANG := false
 
 LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/Android.mk
 
@@ -170,6 +171,7 @@ LOCAL_C_INCLUDES += \
 LOCAL_SDK_VERSION := 9
 
 LOCAL_MODULE := libwebp-decode
+LOCAL_CLANG := false
 
 LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/Android.mk
 
