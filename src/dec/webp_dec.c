@@ -13,11 +13,11 @@
 
 #include <stdlib.h>
 
-#include "./vp8i_dec.h"
-#include "./vp8li_dec.h"
-#include "./webpi_dec.h"
-#include "../utils/utils.h"
-#include "../webp/mux_types.h"  // ALPHA_FLAG
+#include "src/dec/vp8i_dec.h"
+#include "src/dec/vp8li_dec.h"
+#include "src/dec/webpi_dec.h"
+#include "src/utils/utils.h"
+#include "src/webp/mux_types.h"  // ALPHA_FLAG
 
 //------------------------------------------------------------------------------
 // RIFF layout is:
@@ -412,7 +412,8 @@ static VP8StatusCode ParseHeadersInternal(const uint8_t* data,
 }
 
 VP8StatusCode WebPParseHeaders(WebPHeaderStructure* const headers) {
-  VP8StatusCode status;
+  // status is marked volatile as a workaround for a clang-3.8 (aarch64) bug
+  volatile VP8StatusCode status;
   int has_animation = 0;
   assert(headers != NULL);
   // fill out headers, ignore width/height/has_alpha.
@@ -420,7 +421,9 @@ VP8StatusCode WebPParseHeaders(WebPHeaderStructure* const headers) {
                                 NULL, NULL, NULL, &has_animation,
                                 NULL, headers);
   if (status == VP8_STATUS_OK || status == VP8_STATUS_NOT_ENOUGH_DATA) {
-    // TODO(jzern): full support of animation frames will require API additions.
+    // The WebPDemux API + libwebp can be used to decode individual
+    // uncomposited frames or the WebPAnimDecoder can be used to fully
+    // reconstruct them (see webp/demux.h).
     if (has_animation) {
       status = VP8_STATUS_UNSUPPORTED_FEATURE;
     }

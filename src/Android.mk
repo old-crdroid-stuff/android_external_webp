@@ -17,21 +17,13 @@ LOCAL_PATH:= $(call my-dir)
 ###############################################
 include $(CLEAR_VARS)
 LOCAL_SRC_FILES := \
-        dsp/alpha_processing.c \
-        dsp/alpha_processing_mips_dsp_r2.c \
-        dsp/alpha_processing_neon.c \
-        dsp/alpha_processing_sse2.c \
-        dsp/alpha_processing_sse41.c \
-        dsp/argb.c \
-        dsp/argb_mips_dsp_r2.c \
-        dsp/argb_sse2.c \
         dsp/cost.c \
         dsp/cost_mips32.c \
         dsp/cost_mips_dsp_r2.c \
+        dsp/cost_neon.c \
         dsp/cost_sse2.c \
         dsp/cpu.c \
         dsp/enc.c \
-        dsp/enc_avx2.c \
         dsp/enc_mips32.c \
         dsp/enc_mips_dsp_r2.c \
         dsp/enc_msa.c \
@@ -45,19 +37,21 @@ LOCAL_SRC_FILES := \
         dsp/lossless_enc_neon.c \
         dsp/lossless_enc_sse2.c \
         dsp/lossless_enc_sse41.c \
+        dsp/ssim.c \
+        dsp/ssim_sse2.c \
         enc/alpha_enc.c \
         enc/analysis_enc.c \
+        enc/backward_references_cost_enc.c \
         enc/backward_references_enc.c \
         enc/config_enc.c \
         enc/cost_enc.c \
-        enc/delta_palettization_enc.c \
         enc/filter_enc.c \
         enc/frame_enc.c \
         enc/histogram_enc.c \
         enc/iterator_enc.c \
         enc/near_lossless_enc.c \
-        enc/picture_enc.c \
         enc/picture_csp_enc.c \
+        enc/picture_enc.c \
         enc/picture_psnr_enc.c \
         enc/picture_rescale_enc.c \
         enc/picture_tools_enc.c \
@@ -72,27 +66,20 @@ LOCAL_SRC_FILES := \
         mux/muxedit.c \
         mux/muxinternal.c \
         mux/muxread.c \
-        utils/bit_reader_utils.c \
         utils/bit_writer_utils.c \
-        utils/color_cache_utils.c \
         utils/filters_utils.c \
-        utils/huffman_utils.c \
         utils/huffman_encode_utils.c \
-        utils/quant_levels_utils.c \
-        utils/random_utils.c \
-        utils/rescaler_utils.c \
-        utils/thread._utilsc \
-        utils/utils.c
+        utils/quant_levels_utils.c
 
 LOCAL_ARM_MODE := arm
-LOCAL_CFLAGS := -O2 -DANDROID -DWEBP_SWAP_16BIT_CSP
+LOCAL_CFLAGS := -O2 -DANDROID -DWEBP_SWAP_16BIT_CSP -DWEBP_USE_THREAD
 
 LOCAL_C_INCLUDES += \
         $(LOCAL_PATH)/enc \
+        $(LOCAL_PATH)/../ \
         $(LOCAL_PATH)/../include
 
 LOCAL_MODULE := libwebp-encode
-LOCAL_CLANG := false
 
 LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/Android.mk
 
@@ -112,9 +99,11 @@ LOCAL_SRC_FILES := \
         dec/vp8_dec.c \
         dec/vp8l_dec.c \
         dec/webp_dec.c \
+        demux/anim_decode.c \
         demux/demux.c \
         dsp/alpha_processing.c \
         dsp/alpha_processing_mips_dsp_r2.c \
+        dsp/alpha_processing_neon.c \
         dsp/alpha_processing_sse2.c \
         dsp/alpha_processing_sse41.c \
         dsp/cpu.c \
@@ -147,10 +136,13 @@ LOCAL_SRC_FILES := \
         dsp/upsampling_msa.c \
         dsp/upsampling_neon.c \
         dsp/upsampling_sse2.c \
+        dsp/upsampling_sse41.c \
         dsp/yuv.c \
         dsp/yuv_mips32.c \
         dsp/yuv_mips_dsp_r2.c \
+        dsp/yuv_neon.c \
         dsp/yuv_sse2.c \
+        dsp/yuv_sse41.c \
         utils/bit_reader_utils.c \
         utils/color_cache_utils.c \
         utils/filters_utils.c \
@@ -162,16 +154,16 @@ LOCAL_SRC_FILES := \
         utils/utils.c
 
 LOCAL_ARM_MODE := arm
-LOCAL_CFLAGS := -O2 -DANDROID -DWEBP_SWAP_16BIT_CSP
+LOCAL_CFLAGS := -O2 -DANDROID -DWEBP_SWAP_16BIT_CSP -DWEBP_USE_THREAD
 
 LOCAL_C_INCLUDES += \
         $(LOCAL_PATH)/dec \
+        $(LOCAL_PATH)/../ \
         $(LOCAL_PATH)/../include
 
 LOCAL_SDK_VERSION := 9
 
 LOCAL_MODULE := libwebp-decode
-LOCAL_CLANG := false
 
 LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/Android.mk
 
